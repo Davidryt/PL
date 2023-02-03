@@ -10,16 +10,16 @@ extern int yyparse();
 %%
                                 /* Seccion 3  Sint - Semantico   */
 
-axioma:      expresion '\n'          { printf ("Expresion=%lf\n", $1); } restoaxioma 
+axioma:      expresion '\n'                                                     { printf ("Expresion=%lf\n", $1); } restoaxioma 
            ;
-restoaxioma: expresion '\n'  { printf ("Expresion=%lf\n", $1); } restoaxioma    
+restoaxioma: expresion '\n'                                                     { printf ("Expresion=%lf\n", $1); } restoaxioma    
            |  '\n' {exit(0);}/*lambda*/ 
 
-expresion:   operando                { $$ = $1; }
-           | operando '+' expresion  { $$ = $1 + $3; }
-           | operando '-' expresion  { $$ = $1 - $3; }
-           | operando '*' expresion  { $$ = $1 * $3; }
-           | operando '/' expresion  { $$ = $1 / $3; }
+expresion:   operando                                                           { $$ = $1; }
+           | operando '+' expresion                                             { $$ = $1 + $3; }
+           | operando '-' expresion                                             { $$ = $1 - $3; }
+           | operando '*' expresion                                             { $$ = $1 * $3; }
+           | operando '/' expresion                                             { $$ = $1 / $3; }
            ;
 
 operando:    numero                  { $$ = $1; }
