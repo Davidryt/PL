@@ -1132,13 +1132,13 @@ yyreduce:
     {
   case 2: /* $@1: %empty  */
 #line 13 "calc1.y"
-                                     { printf ("Expresion=%lf\n", yyvsp[-1]); }
+                                                                                { printf ("Expresion=%lf\n", yyvsp[-1]); }
 #line 1137 "calc1.tab.c"
     break;
 
   case 4: /* $@2: %empty  */
 #line 15 "calc1.y"
-                             { printf ("Expresion=%lf\n", yyvsp[-1]); }
+                                                                                { printf ("Expresion=%lf\n", yyvsp[-1]); }
 #line 1143 "calc1.tab.c"
     break;
 
@@ -1150,31 +1150,31 @@ yyreduce:
 
   case 7: /* expresion: operando  */
 #line 18 "calc1.y"
-                                     { yyval = yyvsp[0]; }
+                                                                                { yyval = yyvsp[0]; }
 #line 1155 "calc1.tab.c"
     break;
 
   case 8: /* expresion: operando '+' expresion  */
 #line 19 "calc1.y"
-                                     { yyval = yyvsp[-2] + yyvsp[0]; }
+                                                                                { yyval = yyvsp[-2] + yyvsp[0]; }
 #line 1161 "calc1.tab.c"
     break;
 
   case 9: /* expresion: operando '-' expresion  */
 #line 20 "calc1.y"
-                                     { yyval = yyvsp[-2] - yyvsp[0]; }
+                                                                                { yyval = yyvsp[-2] - yyvsp[0]; }
 #line 1167 "calc1.tab.c"
     break;
 
   case 10: /* expresion: operando '*' expresion  */
 #line 21 "calc1.y"
-                                     { yyval = yyvsp[-2] * yyvsp[0]; }
+                                                                                { yyval = yyvsp[-2] * yyvsp[0]; }
 #line 1173 "calc1.tab.c"
     break;
 
   case 11: /* expresion: operando '/' expresion  */
 #line 22 "calc1.y"
-                                     { yyval = yyvsp[-2] / yyvsp[0]; }
+                                                                                { yyval = yyvsp[-2] / yyvsp[0]; }
 #line 1179 "calc1.tab.c"
     break;
 
