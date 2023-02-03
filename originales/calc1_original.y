@@ -1,6 +1,9 @@
 %{                              /* Seccion 1  Declaraciones de C y BISON */
 #include <stdio.h>
 #define YYSTYPE  double
+extern int yylex();
+extern int yyerror();
+extern int yyparse();
 %}
                                 /* Seccion 2  Declaraciones de BISON   */  
 %%
