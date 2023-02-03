@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "calc1_original.y"
+#line 1 "calc1.y"
                               /* Seccion 1  Declaraciones de C y BISON */
 #include <stdio.h>
 #include <stdlib.h>
@@ -76,7 +76,7 @@ extern int yylex();
 extern int yyerror();
 extern int yyparse();
 
-#line 80 "calc1_original.tab.c"
+#line 80 "calc1.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -1131,121 +1131,121 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* $@1: %empty  */
-#line 13 "calc1_original.y"
+#line 13 "calc1.y"
                                      { printf ("Expresion=%lf\n", yyvsp[-1]); }
-#line 1137 "calc1_original.tab.c"
+#line 1137 "calc1.tab.c"
     break;
 
   case 4: /* $@2: %empty  */
-#line 15 "calc1_original.y"
+#line 15 "calc1.y"
                              { printf ("Expresion=%lf\n", yyvsp[-1]); }
-#line 1143 "calc1_original.tab.c"
+#line 1143 "calc1.tab.c"
     break;
 
   case 6: /* restoaxioma: '\n'  */
-#line 16 "calc1_original.y"
+#line 16 "calc1.y"
                    {exit(0);}
-#line 1149 "calc1_original.tab.c"
+#line 1149 "calc1.tab.c"
     break;
 
   case 7: /* expresion: operando  */
-#line 18 "calc1_original.y"
+#line 18 "calc1.y"
                                      { yyval = yyvsp[0]; }
-#line 1155 "calc1_original.tab.c"
+#line 1155 "calc1.tab.c"
     break;
 
   case 8: /* expresion: operando '+' expresion  */
-#line 19 "calc1_original.y"
+#line 19 "calc1.y"
                                      { yyval = yyvsp[-2] + yyvsp[0]; }
-#line 1161 "calc1_original.tab.c"
+#line 1161 "calc1.tab.c"
     break;
 
   case 9: /* expresion: operando '-' expresion  */
-#line 20 "calc1_original.y"
+#line 20 "calc1.y"
                                      { yyval = yyvsp[-2] - yyvsp[0]; }
-#line 1167 "calc1_original.tab.c"
+#line 1167 "calc1.tab.c"
     break;
 
   case 10: /* expresion: operando '*' expresion  */
-#line 21 "calc1_original.y"
+#line 21 "calc1.y"
                                      { yyval = yyvsp[-2] * yyvsp[0]; }
-#line 1173 "calc1_original.tab.c"
+#line 1173 "calc1.tab.c"
     break;
 
   case 11: /* expresion: operando '/' expresion  */
-#line 22 "calc1_original.y"
+#line 22 "calc1.y"
                                      { yyval = yyvsp[-2] / yyvsp[0]; }
-#line 1179 "calc1_original.tab.c"
+#line 1179 "calc1.tab.c"
     break;
 
   case 12: /* operando: numero  */
-#line 25 "calc1_original.y"
+#line 25 "calc1.y"
                                      { yyval = yyvsp[0]; }
-#line 1185 "calc1_original.tab.c"
+#line 1185 "calc1.tab.c"
     break;
 
   case 13: /* numero: '0'  */
-#line 28 "calc1_original.y"
+#line 28 "calc1.y"
                                      { yyval = 0 ; }
-#line 1191 "calc1_original.tab.c"
+#line 1191 "calc1.tab.c"
     break;
 
   case 14: /* numero: '1'  */
-#line 29 "calc1_original.y"
+#line 29 "calc1.y"
                                      { yyval = 1 ; }
-#line 1197 "calc1_original.tab.c"
+#line 1197 "calc1.tab.c"
     break;
 
   case 15: /* numero: '2'  */
-#line 30 "calc1_original.y"
+#line 30 "calc1.y"
                                      { yyval = 2 ; }
-#line 1203 "calc1_original.tab.c"
+#line 1203 "calc1.tab.c"
     break;
 
   case 16: /* numero: '3'  */
-#line 31 "calc1_original.y"
+#line 31 "calc1.y"
                                      { yyval = 3 ; }
-#line 1209 "calc1_original.tab.c"
+#line 1209 "calc1.tab.c"
     break;
 
   case 17: /* numero: '4'  */
-#line 32 "calc1_original.y"
+#line 32 "calc1.y"
                                      { yyval = 4 ; }
-#line 1215 "calc1_original.tab.c"
+#line 1215 "calc1.tab.c"
     break;
 
   case 18: /* numero: '5'  */
-#line 33 "calc1_original.y"
+#line 33 "calc1.y"
                                      { yyval = 5 ; }
-#line 1221 "calc1_original.tab.c"
+#line 1221 "calc1.tab.c"
     break;
 
   case 19: /* numero: '6'  */
-#line 34 "calc1_original.y"
+#line 34 "calc1.y"
                                      { yyval = 6 ; }
-#line 1227 "calc1_original.tab.c"
+#line 1227 "calc1.tab.c"
     break;
 
   case 20: /* numero: '7'  */
-#line 35 "calc1_original.y"
+#line 35 "calc1.y"
                                      { yyval = 7 ; }
-#line 1233 "calc1_original.tab.c"
+#line 1233 "calc1.tab.c"
     break;
 
   case 21: /* numero: '8'  */
-#line 36 "calc1_original.y"
+#line 36 "calc1.y"
                                      { yyval = 8 ; }
-#line 1239 "calc1_original.tab.c"
+#line 1239 "calc1.tab.c"
     break;
 
   case 22: /* numero: '9'  */
-#line 37 "calc1_original.y"
+#line 37 "calc1.y"
                                      { yyval = 9 ; }
-#line 1245 "calc1_original.tab.c"
+#line 1245 "calc1.tab.c"
     break;
 
 
-#line 1249 "calc1_original.tab.c"
+#line 1249 "calc1.tab.c"
 
       default: break;
     }
@@ -1438,7 +1438,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 40 "calc1_original.y"
+#line 40 "calc1.y"
 
                                         /* Seccion 4  Codigo en C   */
 int yyerror (char *mensaje)
