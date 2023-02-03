@@ -1,0 +1,26 @@
+Queda por hacer
+
+ 1: DONE
+ 2: DONE
+ 3: DONE
+ 4: DONE
+ 5: DONE
+ 6: DONE*
+ 7: --------- No se si funciona
+ 8: DONE
+ 9: DONE
+10: DONE
+11: DONE
+12: DONE
+13: DONE
+14: DONE
+15: DONE
+16: DONE
+17: DONE*
+18: a b DONE, c In Progress
+
+Comentarios
+6* --> La declaración inicial de variables no admite asignaciones explicitas, solo implicitas
+17* --> Shift-reduce por los paréntesis
+Errores
+No deja poner por ahora dos funciones (a parte del main) en un mismo programa
