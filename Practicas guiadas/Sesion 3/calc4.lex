@@ -5,6 +5,7 @@ extern int n_linea;
 %%                            /* Segunda Seccion */
 [ \t]                    { ; } /* ignorar espacios y tabuladores */
 [0-9]+\.?|[0-9]*\.[0-9]+ { sscanf (yytext, "%lf", &yylval); return (NUMERO); }
+[a-zA-Z][a-zA-Z0-9]*     { sscanf (yytext, "%s" , &yylval); return(VAR);  }
 \n                       { n_linea++; return ('\n'); }
 .                        { return (yytext [0]); }   /* literales */
 %%                            /* Tercera Seccion */
