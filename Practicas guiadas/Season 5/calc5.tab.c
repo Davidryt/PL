@@ -1100,7 +1100,7 @@ yyreduce:
                                              }else{
                                                   printf ("%c=%lf\n", $1+'A', $3);
                                              }*/
-                                             printf ("%c=%lf\n", (yyvsp[-3].indice), (yyvsp[-1].valor));
+                                             printf ("------------------------%c=%lf\n", (yyvsp[-3].indice), (yyvsp[-1].valor));
                                           }
 #line 1106 "calc5.tab.c"
     break;
