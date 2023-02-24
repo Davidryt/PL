@@ -739,12 +739,12 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 10 "calc5.lex"
-{ sscanf (yytext, "%lf", &yylval.valor); yylval.indice = yylval.valor +26 ; return (VARIABLE); }
+{ sscanf (yytext, "%c", &yylval.valor); yylval.valor = yylval.valor + 26 ; return (VARIABLE); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 11 "calc5.lex"
-{ sscanf (yytext, "%lf", &yylval.valor);  return (VARIABLE); }
+{ sscanf (yytext, "%c", &yylval.valor);  return (VARIABLE); }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */

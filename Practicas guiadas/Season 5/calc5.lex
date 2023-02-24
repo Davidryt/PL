@@ -5,12 +5,12 @@
 extern int n_linea;
 %}
 %%                            /* Segunda Seccion */
-[ \t]                    { ; } /* ignorar espacios y tabuladores */
-[0-9]+\.?|[0-9]*\.[0-9]+ { sscanf (yytext, "%lf", &yylval); return (NUMERO); }
-[a-z] { sscanf (yytext, "%lf", &yylval.valor); yylval.indice =  +26 ; return (VARIABLE); }
-[A-Z] { sscanf (yytext, "%lf", &yylval.valor);  return (VARIABLE); }
-\n                       { n_linea++; return ('\n'); }
-.                        { return (yytext [0]); }   /* literales */
+[ \t]                           { ; } /* ignorar espacios y tabuladores */
+[0-9]+\.?|[0-9]*\.[0-9]+        { sscanf (yytext, "%lf", &yylval); return (NUMERO); }
+[a-z]                           { sscanf (yytext, "%c", &yylval.valor); yylval.valor = yylval.valor + 26 ; return (VARIABLE); }
+[A-Z]                           { sscanf (yytext, "%c", &yylval.valor);  return (VARIABLE); }
+\n                              { n_linea++; return ('\n'); }
+.                               { return (yytext [0]); }   /* literales */
 %%                            /* Tercera Seccion */
 int yywrap ()     /* se incluye para evitar un error de compilacion */
 {
