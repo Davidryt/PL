@@ -508,8 +508,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    21,    21,    21,    23,    23,    33,    34,    37,    38,
-      39,    40,    41,    44,    45,    46,    49,    50,    51
+       0,    21,    21,    21,    23,    23,    34,    35,    38,    39,
+      40,    41,    42,    45,    46,    47,    50,    51,    52
 };
 #endif
 
@@ -1095,83 +1095,84 @@ yyreduce:
   case 4: /* $@2: %empty  */
 #line 23 "calc5.y"
                                           {  memoria [(yyvsp[-3].indice)] = (yyvsp[-1].valor);
-                                             if((yyvsp[-3].indice) > 25){
-                                                  printf ("%c=%lf\n", (yyvsp[-3].indice)+'A'+6, (yyvsp[-1].valor));
+                                             /*if($1 > 25){
+                                                  printf ("%c=%lf\n", $1+'A'+6, $3);
                                              }else{
-                                                  printf ("%c=%lf\n", (yyvsp[-3].indice)+'A', (yyvsp[-1].valor));
-                                             }
+                                                  printf ("%c=%lf\n", $1+'A', $3);
+                                             }*/
+                                             printf ("%c=%lf\n", (yyvsp[-3].indice), (yyvsp[-1].valor));
                                           }
-#line 1105 "calc5.tab.c"
+#line 1106 "calc5.tab.c"
     break;
 
   case 8: /* expresion: termino  */
-#line 37 "calc5.y"
+#line 38 "calc5.y"
                                          { (yyval.valor) = (yyvsp[0].valor); }
-#line 1111 "calc5.tab.c"
+#line 1112 "calc5.tab.c"
     break;
 
   case 9: /* expresion: expresion '+' expresion  */
-#line 38 "calc5.y"
+#line 39 "calc5.y"
                                          { (yyval.valor) = (yyvsp[-2].valor) + (yyvsp[0].valor);  }
-#line 1117 "calc5.tab.c"
+#line 1118 "calc5.tab.c"
     break;
 
   case 10: /* expresion: expresion '-' expresion  */
-#line 39 "calc5.y"
+#line 40 "calc5.y"
                                          { (yyval.valor) = (yyvsp[-2].valor) - (yyvsp[0].valor);  }
-#line 1123 "calc5.tab.c"
+#line 1124 "calc5.tab.c"
     break;
 
   case 11: /* expresion: expresion '*' expresion  */
-#line 40 "calc5.y"
+#line 41 "calc5.y"
                                          { (yyval.valor) = (yyvsp[-2].valor) * (yyvsp[0].valor);  }
-#line 1129 "calc5.tab.c"
+#line 1130 "calc5.tab.c"
     break;
 
   case 12: /* expresion: expresion '/' expresion  */
-#line 41 "calc5.y"
+#line 42 "calc5.y"
                                          { (yyval.valor) = (yyvsp[-2].valor) / (yyvsp[0].valor);  }
-#line 1135 "calc5.tab.c"
+#line 1136 "calc5.tab.c"
     break;
 
   case 13: /* termino: operando  */
-#line 44 "calc5.y"
+#line 45 "calc5.y"
                                                  { (yyval.valor) = (yyvsp[0].valor); }
-#line 1141 "calc5.tab.c"
+#line 1142 "calc5.tab.c"
     break;
 
   case 14: /* termino: '+' operando  */
-#line 45 "calc5.y"
+#line 46 "calc5.y"
                                                  { (yyval.valor) = (yyvsp[0].valor); }
-#line 1147 "calc5.tab.c"
+#line 1148 "calc5.tab.c"
     break;
 
   case 15: /* termino: '-' operando  */
-#line 46 "calc5.y"
+#line 47 "calc5.y"
                                                  { (yyval.valor) = -(yyvsp[0].valor); }
-#line 1153 "calc5.tab.c"
+#line 1154 "calc5.tab.c"
     break;
 
   case 16: /* operando: VARIABLE  */
-#line 49 "calc5.y"
+#line 50 "calc5.y"
                                          { (yyval.valor) = memoria [(yyvsp[0].indice)]; }
-#line 1159 "calc5.tab.c"
+#line 1160 "calc5.tab.c"
     break;
 
   case 17: /* operando: NUMERO  */
-#line 50 "calc5.y"
+#line 51 "calc5.y"
                                          { (yyval.valor) = (yyvsp[0].valor); }
-#line 1165 "calc5.tab.c"
+#line 1166 "calc5.tab.c"
     break;
 
   case 18: /* operando: '(' expresion ')'  */
-#line 51 "calc5.y"
+#line 52 "calc5.y"
                                          { (yyval.valor) = (yyvsp[-1].valor); }
-#line 1171 "calc5.tab.c"
+#line 1172 "calc5.tab.c"
     break;
 
 
-#line 1175 "calc5.tab.c"
+#line 1176 "calc5.tab.c"
 
       default: break;
     }
@@ -1364,7 +1365,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 53 "calc5.y"
+#line 54 "calc5.y"
 
 
 

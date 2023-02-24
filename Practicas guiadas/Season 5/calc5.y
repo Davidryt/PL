@@ -21,11 +21,12 @@ double memoria [53] ;   /* Se define una zona de memoria para las variables */
 axioma:       expresion '\n'              { printf ("Expresion=%lf\n", $1) ; } 
                        r_expr
             | VARIABLE '=' expresion '\n' {  memoria [$1] = $3;
-                                             if($1 > 25){
+                                             /*if($1 > 25){
                                                   printf ("%c=%lf\n", $1+'A'+6, $3);
                                              }else{
                                                   printf ("%c=%lf\n", $1+'A', $3);
-                                             }
+                                             }*/
+                                             printf ("%c=%lf\n", $1, $3);
                                           }
                        r_expr
             ;

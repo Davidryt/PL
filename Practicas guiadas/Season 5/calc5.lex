@@ -6,9 +6,9 @@ extern int n_linea;
 %}
 %%                            /* Segunda Seccion */
 [ \t]                           { ; } /* ignorar espacios y tabuladores */
-[0-9]+\.?|[0-9]*\.[0-9]+        { sscanf (yytext, "%lf", &yylval); return (NUMERO); }
-[a-z]                           { sscanf (yytext, "%c", &yylval.valor); yylval.valor = yylval.valor + 26 ; return (VARIABLE); }
-[A-Z]                           { sscanf (yytext, "%c", &yylval.valor);  return (VARIABLE); }
+[0-9]+\.?|[0-9]*\.[0-9]+        { sscanf (yytext, "%lf", &yylval.valor); return (NUMERO); }
+[a-z]                           { sscanf (yytext, "%c", &yylval.indice);  return (VARIABLE); }
+[A-Z]                           { sscanf (yytext, "%c", &yylval.indice);  return (VARIABLE); }
 \n                              { n_linea++; return ('\n'); }
 .                               { return (yytext [0]); }   /* literales */
 %%                            /* Tercera Seccion */
