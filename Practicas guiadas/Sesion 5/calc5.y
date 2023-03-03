@@ -1,3 +1,6 @@
+
+
+
 %{                      /* SECCION 1 */
 #include <stdio.h>
 double memoria [53] ;   /* Se define una zona de memoria para las variables */
