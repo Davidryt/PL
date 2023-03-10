@@ -1,3 +1,6 @@
+/* David Rico Menéndez - Álvaro Marco Pérez*/
+/* 100384036@alumnos.uc3m.es - 100383350@alumnos.uc3m.es */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -127,7 +130,6 @@ int ParseE() // F ::= (*TF) | (/TF) | (+TF) | (-TF) | T
 			break;
 		}
 			ParseRParen();
-
 		return val;
 	}
 	else
