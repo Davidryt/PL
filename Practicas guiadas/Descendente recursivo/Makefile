@@ -1,4 +1,4 @@
 make:
-    gcc dr_calc4.c -o DescendenteRecursivo
+	gcc dr_LL.c -o DescendenteRecursivo
 	clear
 	./DescendenteRecursivo

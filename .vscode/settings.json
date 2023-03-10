@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "originales",
-        "guiada"
+        "guiada",
+        "recursivo"
     ]
 }
