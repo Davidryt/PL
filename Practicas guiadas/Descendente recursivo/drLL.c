@@ -1,3 +1,5 @@
+/* Álvaro Marco Pérez - David Rico Menéndez - Grupo 2  */
+/* 100383382@alumnos.uc3m.es 100384036@alumnos.uc3m.es  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
