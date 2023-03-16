@@ -1,17 +1,15 @@
-/* David Rico Menéndez - Álvaro Marco Pérez*/
-/* 100384036@alumnos.uc3m.es - 100383350@alumnos.uc3m.es */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 
 #define T_NUMBER 1001
 #define T_OPERATOR 1002
+#define T_VARIABLE 1003
 
 int token;
 int number;
 int token_val;
-
+char temp[2048];
 int line_counter = 1;
 
 int rd_lex()
@@ -33,12 +31,19 @@ int rd_lex()
 		return (token); // returns the Token for Number
 	}
 
-	if (c == '+' || c == '-' || c == '*' || c == '/')
+	if (c == '+' || c == '-' || c == '*' || c == '/' || c == '!')
 	{
 		token_val = c;
 		token = T_OPERATOR;
 		return (token);
 	} // returns the Token for Arithmetic Operators
+
+	if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')
+	{
+		token_val = c;
+		token = T_VARIABLE;
+		return (token);
+	}
 
 	token = c;
 	return (token); // returns a literal
@@ -72,10 +77,18 @@ int ParseNumber() // Parsing Non Terminals and some Tokens require more
 	return val;
 }
 
-int ParseOperator() // Parsing Non Terminals and some Tokens require more
-{					// complex functions
+int ParseOperator() //
+{
+	int val = token_val;
 	MatchSymbol(T_OPERATOR);
-	return token_val;
+	return val;
+}
+
+int ParseVariable() //
+{
+	int val = token_val;
+	MatchSymbol(T_VARIABLE);
+	return val;
 }
 
 int ParseTerm() // T ::= N | ( E )   returns the numeric value of the Term
@@ -86,12 +99,17 @@ int ParseTerm() // T ::= N | ( E )   returns the numeric value of the Term
 	{ // T derives alternatives, requires checking FIRST ( E )
 		val = ParseNumber();
 	}
-	else
+	else if (token == T_VARIABLE)
+	{ // T derives Variable
+		val = ParseVariable();
+		val = temp[val];
+	}
+	/*else
 	{
 		ParseLParen();
 		val = ParseAxiom();
 		ParseRParen();
-	}
+	}*/
 
 	return val;
 }
@@ -107,29 +125,61 @@ int ParseE() // F ::= (*TF) | (/TF) | (+TF) | (-TF) | T
 
 		ParseLParen();
 		operator= ParseOperator();
-
-		val = ParseE();	 // E
-		val2 = ParseE(); // E+
-
-		switch (operator)
+		if (operator== '!')
 		{
-		case '*':
-			val *= val2;
-			break;
-		case '/':
-			val /= val2;
-			break;
-		case '+':
-			val += val2;
-			break;
-		case '-':
-			val -= val2;
-			break;
-		default:
-			rd_syntax_error(operator, 0, "Token %d was read, expected %c (ParseExpression->Operate)\n");
-			break;
+			val = ParseVariable();
+			val2 = ParseE();
+			temp[val] = val2;
+			val = temp[val];
 		}
-			ParseRParen();
+		else
+		{
+			val = ParseE();	 // E
+			val2 = ParseE(); // E+
+			// printf("Operator %d val1 %d val2 %d", operator, val, val2);
+			switch (operator)
+			{
+			case '*':
+				val *= val2;
+				break;
+			case '/':
+				val /= val2;
+				break;
+			case '+':
+				val += val2;
+				break;
+			case '-':
+				val -= val2;
+				break;
+			default:
+				rd_syntax_error(operator, 0, "Token %d was read, expected %d (ParseExpression->Operate)\n");
+				break;
+			}
+			int valx;
+			while (token != ')')
+			{
+				valx = ParseE();
+				switch (operator)
+				{
+				case '*':
+					val *= valx;
+					break;
+				case '/':
+					val /= valx;
+					break;
+				case '+':
+					val += valx;
+					break;
+				case '-':
+					val -= valx;
+					break;
+				default:
+					rd_syntax_error(operator, 0, "Token %d was read, expected %d (ParseExpression->Operate)\n");
+					break;
+				}
+			}
+		}
+		ParseRParen();
 		return val;
 	}
 	else
