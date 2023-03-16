@@ -1,4 +1,4 @@
 make:
-	gcc dr_LL.c -o DescendenteRecursivo
+	gcc drLL.c -o DescendenteRecursivo
 	clear
-	./DescendenteRecursivo
+	./DescendenteRecursivo <drLL.txt >respuesta.txt
