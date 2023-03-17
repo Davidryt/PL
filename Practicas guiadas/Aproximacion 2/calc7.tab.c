@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "calc7.y"
+#line 3 "calc7.y"
                       // SECCION 1 
 #include <stdio.h>
 #include <string.h>
@@ -175,7 +175,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 56 "calc7.y"
+#line 58 "calc7.y"
                 // El tipo de la pila (del AP) tiene caracter dual 
       int valor ;       //  - valor numerico entero 
       int indice ;      //  - indice para identificar una variable
@@ -611,9 +611,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    75,    75,    75,    77,    77,    79,    79,    84,    85,
-      88,    89,    90,    91,    92,    95,    96,    97,   102,   103,
-     104
+       0,    77,    77,    77,    79,    79,    81,    81,    86,    87,
+      90,    91,    92,    93,    94,    97,    98,    99,   104,   105,
+     106
 };
 #endif
 
@@ -1195,97 +1195,97 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* $@1: %empty  */
-#line 75 "calc7.y"
+#line 77 "calc7.y"
                                                                 { printf ("%s\n", (yyvsp[-1].cadena)) ; }
 #line 1201 "calc7.tab.c"
     break;
 
   case 4: /* $@2: %empty  */
-#line 77 "calc7.y"
+#line 79 "calc7.y"
                                                             { printf ("( setq %c %s )\n", (yyvsp[-3].indice), (yyvsp[-1].cadena)) ; }
 #line 1207 "calc7.tab.c"
     break;
 
   case 6: /* $@3: %empty  */
-#line 79 "calc7.y"
+#line 81 "calc7.y"
                                                             { printf ("( print %s )\n", (yyvsp[-1].cadena)) ; }
 #line 1213 "calc7.tab.c"
     break;
 
   case 8: /* r_expr: %empty  */
-#line 84 "calc7.y"
+#line 86 "calc7.y"
                                                                 { ; }
 #line 1219 "calc7.tab.c"
     break;
 
   case 9: /* r_expr: axioma  */
-#line 85 "calc7.y"
+#line 87 "calc7.y"
                                                                     { ; }
 #line 1225 "calc7.tab.c"
     break;
 
   case 10: /* expresion: termino  */
-#line 88 "calc7.y"
+#line 90 "calc7.y"
                                                                     { (yyval.cadena) = (yyvsp[0].cadena) ; }
 #line 1231 "calc7.tab.c"
     break;
 
   case 11: /* expresion: expresion '+' expresion  */
-#line 89 "calc7.y"
+#line 91 "calc7.y"
                                                             { sprintf(temp, "( + %s %s )", (yyvsp[-2].cadena), (yyvsp[0].cadena)); (yyval.cadena)=genera_cadena (temp); }
 #line 1237 "calc7.tab.c"
     break;
 
   case 12: /* expresion: expresion '-' expresion  */
-#line 90 "calc7.y"
+#line 92 "calc7.y"
                                                             { sprintf(temp, "( - %s %s )", (yyvsp[-2].cadena), (yyvsp[0].cadena)); (yyval.cadena)=genera_cadena (temp); }
 #line 1243 "calc7.tab.c"
     break;
 
   case 13: /* expresion: expresion '*' expresion  */
-#line 91 "calc7.y"
+#line 93 "calc7.y"
                                                             { sprintf(temp, "( * %s %s )", (yyvsp[-2].cadena), (yyvsp[0].cadena)); (yyval.cadena)=genera_cadena (temp); }
 #line 1249 "calc7.tab.c"
     break;
 
   case 14: /* expresion: expresion '/' expresion  */
-#line 92 "calc7.y"
+#line 94 "calc7.y"
                                                             { sprintf(temp, "( / %s %s )", (yyvsp[-2].cadena), (yyvsp[0].cadena)); (yyval.cadena)=genera_cadena (temp); }
 #line 1255 "calc7.tab.c"
     break;
 
   case 15: /* termino: operando  */
-#line 95 "calc7.y"
+#line 97 "calc7.y"
                                                                     { (yyval.cadena) = (yyvsp[0].cadena) ; }
 #line 1261 "calc7.tab.c"
     break;
 
   case 16: /* termino: '+' operando  */
-#line 96 "calc7.y"
+#line 98 "calc7.y"
                                                         { (yyval.cadena) = (yyvsp[0].cadena) ; }
 #line 1267 "calc7.tab.c"
     break;
 
   case 17: /* termino: '-' operando  */
-#line 97 "calc7.y"
+#line 99 "calc7.y"
                                                         { sprintf (temp, "( - 0 %s )", (yyvsp[0].cadena)) ; (yyval.cadena) = genera_cadena (temp) ; }
 #line 1273 "calc7.tab.c"
     break;
 
   case 18: /* operando: VARIABLE  */
-#line 102 "calc7.y"
+#line 104 "calc7.y"
                                                                     { sprintf (temp, "%c", (yyvsp[0].indice)) ; (yyval.cadena) = genera_cadena (temp) ; }
 #line 1279 "calc7.tab.c"
     break;
 
   case 19: /* operando: NUMERO  */
-#line 103 "calc7.y"
+#line 105 "calc7.y"
                                                                     { sprintf (temp, "%d", (yyvsp[0].valor)) ; (yyval.cadena) = genera_cadena (temp) ; }
 #line 1285 "calc7.tab.c"
     break;
 
   case 20: /* operando: '(' expresion ')'  */
-#line 104 "calc7.y"
+#line 106 "calc7.y"
                                                                 { (yyval.cadena) = (yyvsp[-1].cadena) ; }
 #line 1291 "calc7.tab.c"
     break;
@@ -1484,7 +1484,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 107 "calc7.y"
+#line 109 "calc7.y"
 
 
                         /* SECCION 4  Codigo en C */
