@@ -198,9 +198,9 @@ int ParseAxiom()
 
 int main(void)
 {
-	while (1)
+	while (token!='#')
 	{
-		rd_lex();
+		token=rd_lex();
 		printf("Valor %d\n", ParseAxiom());
 	}
 }
