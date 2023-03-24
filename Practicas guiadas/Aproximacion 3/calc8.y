@@ -64,7 +64,7 @@ char *char_to_string(char c)
 %token  <valor>  NUMERO    // Todos los token tienen un tipo para la pila
 %token  <indice> VARIABLE
 
-%type   <cadena>  expresion termino operando
+%type   <cadena>  expresion termino operando asignacion impresion
 
 %right  '='             //  es la ultima operacion que se debe realizar
 %left   '+' '-'         //  menor orden de precedencia 
@@ -76,15 +76,21 @@ char *char_to_string(char c)
 
 axioma:         expresion '\n'				        { printf ("%s\n", $1) ; }
                 r_expr
-            |   VARIABLE '=' expresion '\n'		    { printf ("( setq %c %s )\n", $1, $3) ; }
+            |   asignacion '\n'                     { printf ("%s\n", $1) ; }
                 r_expr
-            |    '#' expresion '\n'		            { printf ("( print %s )\n", $2) ; }
+            |   impresion '\n'		                { printf ("%s\n", $1) ; }
                 r_expr
             ;
 
-
 r_expr:         /* lambda */				        { ; }
             |   axioma					            { ; }
+            ;
+
+asignacion:     VARIABLE '=' expresion		        { sprintf(temp, "( setq %c %s )", $1, $3); $$=genera_cadena (temp); }
+            ;
+
+impresion:     '#' expresion    		            { sprintf(temp, "( print %s )", $2); $$=genera_cadena (temp); }
+
             ;
 
 expresion:      termino					            { $$ = $1 ; }
@@ -92,13 +98,13 @@ expresion:      termino					            { $$ = $1 ; }
             |   expresion '-' expresion   		    { sprintf(temp, "( - %s %s )", $1, $3); $$=genera_cadena (temp); }
             |   expresion '*' expresion   		    { sprintf(temp, "( * %s %s )", $1, $3); $$=genera_cadena (temp); }
             |   expresion '/' expresion   		    { sprintf(temp, "( / %s %s )", $1, $3); $$=genera_cadena (temp); }
+            |   asignacion					        { $$ = $1 ; }
+            |   impresion					        { $$ = $1 ; }
             ;
 
 termino:        operando				            { $$ = $1 ; }                          
             |   '+' operando %prec SIGNO_UNARIO		{ $$ = $2 ; }
-            |   '-' operando %prec SIGNO_UNARIO		{ sprintf (temp, "( - 0 %s )", $2) ; $$ = genera_cadena (temp) ; }    
-                                                    
-                                                 
+            |   '-' operando %prec SIGNO_UNARIO		{ sprintf (temp, "( - 0 %s )", $2) ; $$ = genera_cadena (temp) ; }                                                     
             ;
 
 operando:       VARIABLE				            { sprintf (temp, "%c", $1) ; $$ = genera_cadena (temp) ; }
