@@ -1,3 +1,5 @@
+/* David Rico Menéndez - Álvaro Marco Pérez Grupo 2 */
+/* 100384036@alumnos.uc3m.es 100383382@alumnos.uc3m.es */
 %{                          // SECCION 1 Declaraciones de C-Yacc
 
 #include <stdio.h>
