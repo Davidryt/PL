@@ -1,0 +1,10 @@
+int a;
+int b;
+main(){
+    int c = 3;
+    a=1;
+    b=2;
+    $(a+b+c);
+    int a, b=2, c, d, e=4;
+    int f = 2, g, h, i= 5;
+}

@@ -104,7 +104,9 @@ declaracion:    INTEGER IDENTIF '=' NUMBER r_declaracion        { sprintf (temp,
                                                                     $$.code = gen_code (temp) ; }
             |   INTEGER IDENTIF r_declaracion                   { sprintf (temp, "(setq %s 0) %s", $2.code, $3.code) ; 
                                                                     $$.code = gen_code (temp) ; }
-            |   IDENTIF '=' NUMBER                              { sprintf (temp, "(setq %s %d)", $1.code, $3.value) ; 
+            |   INTEGER IDENTIF '=' expresion                   { sprintf (temp, "(setq %s %s)", $2.code, $4.code) ; 
+                                                                    $$.code = gen_code (temp) ; }
+            |   IDENTIF '=' expresion                           { sprintf (temp, "(setq %s %s)", $1.code, $3.code) ; 
                                                                     $$.code = gen_code (temp) ; }
             ;
 
