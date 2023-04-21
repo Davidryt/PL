@@ -1,0 +1,22 @@
+int a;
+int b;
+main(){
+    int a = 0;
+    a=1;
+    b=2;
+    int c = 3, d, e, f= 4;
+    puts("step1");
+    printf("daigual", a , b+c );
+    printf("daigual", 1 || 1 && 0 == 1 != 1 < 1 > 1 >= 1 <= 1 + 1 - 1 / 1 * 1);
+    while (a==1) {
+        int f = 2, g, h, i= 5;
+        puts("while 1");
+        printf("%d", a , b+c );
+        while (a==1) {
+            int f = 2, g, h, i= 5;
+            puts("while 2");
+            printf("%d", a , b+c );
+            a = 3;
+        }
+    }
+}
