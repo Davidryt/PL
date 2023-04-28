@@ -99,14 +99,15 @@ r_globales:     /* Lambda */                                                { $$
             ;
 
 funciones:      /* Lambda */                                                { $$.code = ""; }
-            |   IDENTIF                                                     {strcpy(funcion, $1.code);} 
-                '(' args ')' '{' body '}'  r_funciones                      { sprintf (temp, "(defun %s (%s) \n%s\n)\n%s", funcion, $3.code, $6.code, $8.code ) ;
-                                                                                      $$.code = gen_code (temp) ; }   
+            |   IDENTIF                                                     { strcpy(funcion, $1.code); }
+                '(' args ')' '{' body '}'  r_funciones                      { sprintf (temp, "(defun %s (%s) \n%s\n)\n%s", $1.code, $4.code, $7.code, $9.code ) ;
+                                                                                $$.code = gen_code (temp) ; }   
             ;
 
 r_funciones:     /* Lambda */                                               { $$.code = ""; }
-            |   IDENTIF '(' args ')' '{' body '}' r_funciones               { sprintf (temp, "(defun %s (%s) \n%s\n)\n%s", $1.code, $3.code, $6.code, $8.code ) ;
-                                                                                $$.code = gen_code (temp) ; } 
+            |   IDENTIF                                                     { strcpy(funcion, $1.code); }
+                '(' args ')' '{' body '}'  r_funciones                      { sprintf (temp, "(defun %s (%s) \n%s\n)\n%s", $1.code, $4.code, $7.code, $9.code ) ;
+                                                                                $$.code = gen_code (temp) ; }  
             ;
 
 main:           MAIN '(' args ')' '{' body '}'                              { sprintf (temp, "(defun main (%s)\n%s) ", $3.code, $6.code) ;  
@@ -153,19 +154,19 @@ sentencia:      declaracion                                                 { $$
             ;
 
 r_sentencia:    /* Lambda */                                                { $$.code = ""; }
-            |   ',' expresion r_sentencia                                     { sprintf (temp, "(print %s) %s", $2.code, $3.code) ;  
+            |   ',' expresion r_sentencia                                   { sprintf (temp, "(print %s) %s", $2.code, $3.code) ;  
                                                                                 $$.code = gen_code (temp) ;}
             ;
 
-declaracion:    INTEGER IDENTIF '=' expresion r_declaracion                    { sprintf (temp, "(setq %s %d) %s", $2.code, $4.value, $5.code) ; 
+declaracion:    INTEGER IDENTIF '=' expresion r_declaracion                 { sprintf (temp, "(setq %s %d) %s", $2.code, $4.value, $5.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
             |   INTEGER IDENTIF r_declaracion                               { sprintf (temp, "(setq %s 0) %s", $2.code, $3.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
-            |   IDENTIF '=' expresion                                          { sprintf (temp, "(setq %s %d)", $1.code, $3.value) ; 
+            |   IDENTIF '=' expresion                                       { sprintf (temp, "(setq %s %d)", $1.code, $3.value) ; 
                                                                                 $$.code = gen_code (temp) ; }
             |   INTEGER IDENTIF '[' expresion ']'  r_declaracion            { sprintf (temp, "(setq %s (make-array %s)) %s", $2.code, $4.code, $6.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
-            |   IDENTIF '[' expresion ']' '=' expresion r_declaracion                    { sprintf (temp, "(setf (aref %s %s) %s) %s", $1.code, $3.code, $6.code, $7.code) ; 
+            |   IDENTIF '[' expresion ']' '=' expresion r_declaracion       { sprintf (temp, "(setf (aref %s %s) %s) %s", $1.code, $3.code, $6.code, $7.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
             ;
 
@@ -180,7 +181,7 @@ declaracion_global:    INTEGER IDENTIF '=' NUMBER r_declaracion             { sp
 r_declaracion:  /* Lambda */                                                { $$.code = ""; }
             |   ',' r_declaracion                                           { sprintf (temp, " %s", $2.code) ;  
                                                                                 $$.code = gen_code (temp) ;}
-            |   IDENTIF '=' expresion r_declaracion                            { sprintf (temp, "(setq %s %d) %s", $1.code, $3.value, $4.code) ; 
+            |   IDENTIF '=' expresion r_declaracion                         { sprintf (temp, "(setq %s %d) %s", $1.code, $3.value, $4.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
             |   IDENTIF r_declaracion                                       { sprintf (temp, "(setq %s 0) %s", $1.code, $2.code) ;
                                                                                 $$.code = gen_code (temp) ; }  
@@ -216,7 +217,7 @@ expresion:      termino                                                     { $$
             ;
 
 r_expresion:    /* Lambda */                                                { $$.code = ""; }
-            |   ',' expresion r_expresion                                     { sprintf (temp, ", %s %s", $2.code, $3.code) ;  
+            |   ',' expresion r_expresion                                   { sprintf (temp, ", %s %s", $2.code, $3.code) ;  
                                                                                 $$.code = gen_code (temp) ;}
             ;
 

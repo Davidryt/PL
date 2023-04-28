@@ -1,5 +1,5 @@
-int a;
-int b;
+int x;
+int y;
 funcion0(){
     puts("funcion0");
     printf("%d", funcion0());
@@ -11,6 +11,12 @@ funcion1(int y){
 }
 funcion2(int a, int b, int x){
     puts("funcion2");
+    return 1+1;
+    printf("%d", funcion2(a , b+x, 3*2));
+    return 1+1;
+    printf("%d", funcion2(a , b+x, 3*2));
+    return 1+1;
+    printf("%d", funcion2(a , b+x, 3*2));
     return 1+1;
     printf("%d", funcion2(a , b+x, 3*2));
 }
