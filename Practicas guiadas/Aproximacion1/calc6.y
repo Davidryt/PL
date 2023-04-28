@@ -7,7 +7,8 @@
 #include <string.h>
 char temp [2048] ;
 
-char *genera_cadena (char *nombre)     
+
+char *genera_cadena (char *nombre)
 {                                      
     char *p ;
     int l ;
