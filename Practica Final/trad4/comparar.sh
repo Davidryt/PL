@@ -6,7 +6,7 @@ for dir in iniciales avanzadas; do
 for file in "$dir"/*.c; do
     echo "Compiling C $file"
     output_file="${file%.c}_c.txt"
-    gcc "$file" -o "${file%.c}.o" -Wimplicit-int
+    gcc "$file" -o "${file%.c}.o" -Wimplicit-int -w
     echo "Executing C $file"
     ./"${file%.c}.o" > "$output_file"
 done

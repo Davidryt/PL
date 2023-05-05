@@ -179,18 +179,37 @@ declaracion:    INTEGER IDENTIF '=' expresion r_declaracion                 { sp
                                                                                 $$.code = gen_code (temp) ; }
             |   IDENTIF '=' expresion                                       { sprintf (temp, "(setq %s %s)", $1.code, $3.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
-            |   INTEGER IDENTIF '[' expresion ']'  r_declaracion            { sprintf (temp, "(setq %s (make-array %s)) %s", $2.code, $4.code, $6.code) ; 
+            |   INTEGER IDENTIF '[' expresion ']'  r_declaracion            { if ($4.tipo) {
+                                                                                sprintf (temp, "(setq %s (make-array (if %s 1 0))) %s", $2.code, $4.code, $6.code) ;   
+                                                                              } else {
+                                                                                sprintf (temp, "(setq %s (make-array %s)) %s", $2.code, $4.code, $6.code) ;   
+                                                                              }  
                                                                                 $$.code = gen_code (temp) ; }
-            |   IDENTIF '[' expresion ']' '=' expresion r_declaracion       { sprintf (temp, "(setf (aref %s %s) %s) %s", $1.code, $3.code, $6.code, $7.code) ; 
+            |   IDENTIF '[' expresion ']' '=' expresion r_declaracion       { if ($3.tipo) {
+                                                                                sprintf (temp, "(setf (aref %s (if %s 1 0)) %s) %s", $1.code, $3.code, $6.code, $7.code) ;   
+                                                                              } else {
+                                                                                sprintf (temp, "(setf (aref %s %s) %s) %s", $1.code, $3.code, $6.code, $7.code) ;   
+                                                                              }
+                                                                                $$.code = gen_code (temp) ; }
+            |   IDENTIF ',' r_identif '=' expresion r_expresion             { sprintf (temp, "(setf (values %s %s) (values %s %s))", $1.code, $3.code, $5.code, $6.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
             ;
 
+r_identif:      IDENTIF                                                     { sprintf (temp, " %s", $1.code) ; 
+                                                                                $$.code = gen_code (temp) ; }
+            |   IDENTIF ',' r_identif                                       { sprintf (temp, " %s %s", $1.code, $3.code) ; 
+                                                                                $$.code = gen_code (temp) ; }
+
 declaracion_global:    
-                INTEGER IDENTIF '=' NUMBER r_declaracion             { sprintf (temp, "(setq %s %d) %s", $2.code, $4.value, $5.code) ; 
+                INTEGER IDENTIF '=' NUMBER r_declaracion                    { sprintf (temp, "(setq %s %d) %s", $2.code, $4.value, $5.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
             |   INTEGER IDENTIF r_declaracion                               { sprintf (temp, "(setq %s 0) %s", $2.code, $3.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
-            |   INTEGER IDENTIF '[' expresion ']'  r_declaracion            { sprintf (temp, "(setq %s (make-array %s)) %s", $2.code, $4.code, $6.code) ; 
+            |   INTEGER IDENTIF '[' expresion ']'  r_declaracion            { if ($4.tipo) {
+                                                                                sprintf (temp, "(setq %s (make-array (if %s 1 0))) %s", $2.code, $4.code, $6.code) ;   
+                                                                              } else {
+                                                                                sprintf (temp, "(setq %s (make-array %s)) %s", $2.code, $4.code, $6.code) ;   
+                                                                              }  
                                                                                 $$.code = gen_code (temp) ; }
             ;
 
@@ -310,7 +329,11 @@ operando:       IDENTIF                                                     { sp
             |   NUMBER                                                      { sprintf (temp, "%d", $1.value) ;
                                                                                 $$.code = gen_code (temp) ; 
                                                                                 $$.tipo = 0 ; }
-            |   IDENTIF '[' expresion ']'                                   { sprintf (temp, "(aref %s %s)", $1.code, $3.code) ;
+            |   IDENTIF '[' expresion ']'                                   { if ($3.tipo) {
+                                                                                sprintf (temp, "(aref %s (if %s 1 0))", $1.code, $3.code) ;
+                                                                              } else {
+                                                                                sprintf (temp, "(aref %s %s)", $1.code, $3.code) ;
+                                                                              }
                                                                                 $$.code = gen_code (temp) ; }
             |   IDENTIF '('  ')'                                            { sprintf (temp, "(%s)", $1.code) ;
                                                                                 $$.code = gen_code (temp) ; }
