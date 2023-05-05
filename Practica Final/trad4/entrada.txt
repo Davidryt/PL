@@ -1,5 +1,8 @@
 int x;
 int y;
+swap (int a,int b) {
+    return b, a ;
+}
 funcion0(){
     puts("funcion0");
     printf("%d", funcion0());
@@ -62,6 +65,6 @@ main(){
     printf("%d",a[5] + 1 );
     a[2345]   = 1;
     a[1+2345]   = 1 + a[1];
+    
 }
-
 //@(main)

@@ -5,6 +5,3 @@ make:
 	./traductor <entrada.txt >salida.txt
 	echo "\n"
 	cat salida.txt
-	sh borrar_pruebas.sh
-	sh ejecutar_pruebas.sh
-	sh comparar.sh 

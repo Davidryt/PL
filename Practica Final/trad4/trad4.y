@@ -150,7 +150,7 @@ body:           sentencia ';' r_body                                        { sp
                         '{' body '}' r_body  
                                                                             { sprintf (temp, "\t%s\n\t(loop while %s do \n%s\t%s)\n%s", $3.code, $5.code, $10.code, $7.code, $12.code) ;
                                                                                 $$.code = gen_code (temp) ; }
-            |   RETURN expresion ';' r_body                                 { sprintf (temp, "\t(return-from %s %s)\n%s",funcion, $2.code, $4.code) ;
+            |   RETURN expresion r_expresion ';' r_body                                 { sprintf (temp, "\t(return-from %s (values %s %s))\n%s",funcion, $2.code, $3.code, $5.code) ;
                                                                                 $$.code = gen_code (temp) ; }
             |   expresion ';' r_body                                        { sprintf (temp, "\t%s \n%s", $1.code, $3.code) ;
                                                                                $$.code = gen_code (temp) ; }
