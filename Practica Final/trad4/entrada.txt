@@ -39,11 +39,16 @@ main(){
             a = 3;
         }
     }
-    if (a==1){
+    if (a-1){
+       puts("if 1"); 
+    }
+    if (a%1==0){
        puts("if 1"); 
     }
     if (a==1){
-       puts("if 2"); 
+        while (a-b) {
+            puts("if 2"); 
+        }
     }else{
         puts("else 1"); 
     }

@@ -11,16 +11,16 @@
 	(print (funcion1 (+ 7 2) ))  
 
 )
-(defun funcion2 (a , b , x ) 
+(defun funcion2 (a  b  x ) 
 	(print "funcion2") 
 	(return-from funcion2 (+ 1 1))
-	(print (funcion2 a , (+ b x) , (* 3 2) ))  
+	(print (funcion2 a  (+ b x)  (* 3 2) ))  
 	(return-from funcion2 (+ 1 1))
-	(print (funcion2 a , (+ b x) , (* 3 2) ))  
+	(print (funcion2 a  (+ b x)  (* 3 2) ))  
 	(return-from funcion2 (+ 1 1))
-	(print (funcion2 a , (+ b x) , (* 3 2) ))  
+	(print (funcion2 a  (+ b x)  (* 3 2) ))  
 	(return-from funcion2 (+ 1 1))
-	(print (funcion2 a , (+ b x) , (* 3 2) ))  
+	(print (funcion2 a  (+ b x)  (* 3 2) ))  
 
 )
 (defun main ()
@@ -30,7 +30,7 @@
 	(setq c 3)  (setq d 0)  (setq e 0)  (setq f 4)  
 	(print "step1") 
 	(print a) (print (+ b c))  
-	(print (or 1 (And 1 (/= (= 0 1) (>= (<= (> (< 1 1) 1) 1) (- (+ 1 1) (* (/ 1 1) 1)))))))  
+	(print (or 1 (And 1 (/= (= 0 1) (<= (>= (> (< 1 1) 1) 1) (- (+ 1 1) (* (/ 1 1) 1)))))))  
 	(loop while (= a 1) do 
 	(setq f 2)  (setq g 0)  (setq h 0)  (setq i 5)  
 	(print "while 1") 
@@ -42,13 +42,22 @@
 	(setq a 3) 
 	) 
 	) 
-	(if (= a 1) 
+	(if ( /= 0 (- a 1)) 
+	(progn 
 	(print "if 1") 
-	) 
+)	) 
+	(if (= (mod a 1) 0) 
+	(progn 
+	(print "if 1") 
+)	) 
 	(if (= a 1) 
+	(progn 
+	(loop while ( /= 0 (- a b)) do 
 	(print "if 2") 
-	(print "else 1") 
 	) 
+)	(progn 
+	(print "else 1") 
+)	) 
 	(setq b 0)  
 	(setq ii 0) 
 	(loop while (> ii 10) do 
