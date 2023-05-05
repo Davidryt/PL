@@ -206,16 +206,59 @@ r_declaracion:  /* Lambda */                                                { $$
             ;
 
 expresion:      termino                                                     { $$ = $1 ; }
-            |   expresion '+' expresion                                     { sprintf (temp, "(+ %s %s)", $1.code, $3.code) ;
+            |   expresion '+' expresion                                     { if ($1.tipo == 1 && $3.tipo == 0 ) {
+                                                                                   sprintf (temp, "(+ (if %s 1 0) %s)", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 0 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(+ %s (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 1 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(+ (if %s 1 0) (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else {
+                                                                                    sprintf (temp, "(+ %s %s)", $1.code, $3.code) ;    
+                                                                                }
                                                                                 $$.code = gen_code (temp) ;
                                                                                 $$.tipo = 0 ; }
-            |   expresion '-' expresion                                     { sprintf (temp, "(- %s %s)", $1.code, $3.code) ;
+            |   expresion '-' expresion                                     { if ($1.tipo == 1 && $3.tipo == 0 ) {
+                                                                                   sprintf (temp, "(- (if %s 1 0) %s)", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 0 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(- %s (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 1 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(- (if %s 1 0) (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else {
+                                                                                    sprintf (temp, "(- %s %s)", $1.code, $3.code) ;    
+                                                                                }
                                                                                 $$.code = gen_code (temp) ;
                                                                                 $$.tipo = 0 ; }
-            |   expresion '*' expresion                                     { sprintf (temp, "(* %s %s)", $1.code, $3.code) ;
+            |   expresion '*' expresion                                     { if ($1.tipo == 1 && $3.tipo == 0 ) {
+                                                                                   sprintf (temp, "(* (if %s 1 0) %s)", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 0 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(* %s (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 1 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(* (if %s 1 0) (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else {
+                                                                                    sprintf (temp, "(* %s %s)", $1.code, $3.code) ;    
+                                                                                }
                                                                                 $$.code = gen_code (temp) ;
                                                                                 $$.tipo = 0 ; }
-            |   expresion '/' expresion                                     { sprintf (temp, "(/ %s %s)", $1.code, $3.code) ;
+            |   expresion '/' expresion                                     { if ($1.tipo == 1 && $3.tipo == 0 ) {
+                                                                                   sprintf (temp, "(/ (if %s 1 0) %s)", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 0 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(/ %s (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 1 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(/ (if %s 1 0) (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else {
+                                                                                    sprintf (temp, "(/ %s %s)", $1.code, $3.code) ;    
+                                                                                }
+                                                                                $$.code = gen_code (temp) ;
+                                                                                $$.tipo = 0 ; }
+            |   expresion '%' expresion                                     { if ($1.tipo == 1 && $3.tipo == 0 ) {
+                                                                                   sprintf (temp, "(mod (if %s 1 0) %s)", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 0 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(mod %s (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else if ($1.tipo == 1 && $3.tipo == 1 ) {
+                                                                                    sprintf (temp, "(mod (if %s 1 0) (if %s 1 0))", $1.code, $3.code) ;
+                                                                                } else {
+                                                                                    sprintf (temp, "(mod %s %s)", $1.code, $3.code) ;    
+                                                                                }
                                                                                 $$.code = gen_code (temp) ;
                                                                                 $$.tipo = 0 ; }
             |   expresion OR expresion                                      { sprintf (temp, "(or %s %s)", $1.code, $3.code) ;
@@ -242,9 +285,6 @@ expresion:      termino                                                     { $$
             |   expresion '>' expresion                                     { sprintf (temp, "(> %s %s)", $1.code, $3.code) ;
                                                                                 $$.code = gen_code (temp) ; 
                                                                                 $$.tipo = 1 ; }
-            |   expresion '%' expresion                                     { sprintf (temp, "(mod %s %s)", $1.code, $3.code) ;
-                                                                                $$.code = gen_code (temp) ; 
-                                                                                $$.tipo = 0 ; }
             ;
 
 r_expresion:    /* Lambda */                                                { $$.code = ""; }
