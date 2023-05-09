@@ -1,0 +1,80 @@
+int x;
+int y;
+swap (int a,int b) {
+    return b, a ;
+}
+funcion0(){
+    puts("funcion0");
+    printf("%d", funcion0());
+    return 1+1;
+}
+funcion1(int y){
+    puts("funcion1");
+    printf("%d", funcion1(7+2));
+}
+funcion2(int a, int b, int x){
+    puts("funcion2");
+    return 1+1;
+    printf("%d", funcion2(a , b+x, 3*2));
+    return 1+1;
+    printf("%d", funcion2(a , b+x, 3*2));
+    return 1+1;
+    printf("%d", funcion2(a , b+x, 3*2));
+    return 1+1;
+    printf("%d", funcion2(a , b+x, 3*2));
+}
+main(){
+    int a = 0;
+    a=1;
+    b=2;
+    int c = 3, d, e, f= 4;
+    puts("step1");
+    printf("daigual", a , b+c );
+    printf("daigual", 1 || 1 && 0 == 1 != 1 < 1 > 1 >= 1 <= 1 + 1 - 1 / 1 * 1);
+    while (a==1) {
+        int f = 2, g, h, i= 5;
+        puts("while 1");
+        printf("%d", a , b+c );
+        while (a==1) {
+            int f = 2, g, h, i= 5;
+            puts("while 2");
+            printf("%d", a , b+c );
+            a = 3;
+        }
+    }
+    if (a-1){
+       puts("if 1"); 
+    }
+    if (a%1==0){
+       puts("if 1"); 
+    }
+    if (a==1){
+        while (a-b) {
+            puts("if 2"); 
+        }
+    }else{
+        puts("else 1"); 
+    }
+    int b = 0;
+    for(int ii = 0; ii > 10 ; ii = ii + 1 + 2 + b){
+        puts("for 1");
+    }
+    int a[1];
+    int a[1], b[1];
+    int a[1], b[1+1], c;
+    printf("%d",a[5] + 1 );
+    a[2345]   = 1;
+    a[1+2345]   = 1 + a[1];
+    a+(a<b);
+    (a<b)-4;
+    (a<b)*(a<b);
+    a=a%(a<b);
+    a=a/(a<b);
+    a,b = x,y;
+    a,b = patata(0),1+1;
+    a,b = funcion0(1+1), lista[a<B];
+    a[a>b] = 1;
+    int a [a<b];
+
+}
+//@(main)
