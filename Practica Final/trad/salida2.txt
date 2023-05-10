@@ -1,0 +1,12 @@
+(defun main ()
+	(let
+	((a 1)  (b 3) )
+		(print a)  
+	(let
+	()
+		(print a)  
+	)
+	(print a)  
+	)
+) 
+ (main)

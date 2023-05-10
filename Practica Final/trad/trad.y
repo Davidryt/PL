@@ -1,5 +1,5 @@
-/* David Rico Menéndez - Álvaro Marco Pérez Grupo 2 */
-/* 100384036@alumnos.uc3m.es 100383382@alumnos.uc3m.es */
+/* Álvaro Marco Pérez David Rico Menéndez Grupo 2 */
+/* 100383382@alumnos.uc3m.es 100384036@alumnos.uc3m.es */
 %{                          // SECCION 1 Declaraciones de C-Yacc
 
 #include <stdio.h>
@@ -86,8 +86,10 @@ type <...> Axiom ...
 %left UNARY_SIGN                // mayor orden de precedencia
 
 %%                              // Seccion 3 Gramatica - Semantico
+axioma:       program                                                       { ; }
+            ;
 
-axioma:         globales funciones main                                     { printf ("%s%s%s\n", $1.code, $2.code, $3.code) ; }
+program:         globales funciones main                                    { printf ("%s%s%s\n", $1.code, $2.code, $3.code) ; }
             ;
 
 globales:       /* Lambda */                                                { $$.code = ""; }
@@ -102,17 +104,17 @@ r_globales:     /* Lambda */                                                { $$
 
 funciones:      /* Lambda */                                                { $$.code = ""; }
             |   IDENTIF                                                     { strcpy(funcion, $1.code); }
-                '(' args ')' '{' body '}'  r_funciones                      { sprintf (temp, "(defun %s (%s) \n%s\n)\n%s", $1.code, $4.code, $7.code, $9.code ) ;
+                '(' args ')' lets   r_funciones                             { sprintf (temp, "(defun %s (%s) \n\t(let\n%s\t)\n)\n%s", $1.code, $4.code, $6.code, $7.code ) ;
                                                                                 $$.code = gen_code (temp) ; }   
             ;
 
 r_funciones:     /* Lambda */                                               { $$.code = ""; }
             |   IDENTIF                                                     { strcpy(funcion, $1.code); }
-                '(' args ')' '{' body '}'  r_funciones                      { sprintf (temp, "(defun %s (%s) \n%s\n)\n%s", $1.code, $4.code, $7.code, $9.code ) ;
+                '(' args ')' lets   r_funciones                             { sprintf (temp, "(defun %s (%s) \n\t(let\n%s\t)\n)\n\n%s", $1.code, $4.code, $6.code, $7.code ) ;
                                                                                 $$.code = gen_code (temp) ; }  
             ;
 
-main:           MAIN '(' args ')' '{' body '}'                              { sprintf (temp, "(defun main (%s)\n%s) ", $3.code, $6.code) ;  
+main:           MAIN '(' args ')' lets                                      { sprintf (temp, "(defun main (%s)\n\t(let\n%s\t)\n) ", $3.code, $5.code) ;  
                                                                                 $$.code = gen_code (temp) ; }
             ;
 
@@ -126,7 +128,9 @@ r_args:         /* Lambda */                                                { $$
                                                                                 $$.code = gen_code (temp) ; } 
             ;
 
-body:           sentencia ';' r_body                                        { sprintf (temp, "\t%s \n%s", $1.code, $3.code) ;
+body:            sentencia ';' r_body                                       { sprintf (temp, "\t%s \n%s", $1.code, $3.code) ;
+                                                                               $$.code = gen_code (temp) ; }
+            |   declaracion ';' r_body                                      { sprintf (temp, "\t%s \n%s", $1.code, $3.code) ;
                                                                                $$.code = gen_code (temp) ; }
             |   WHILE '(' expresion ')' '{' body '}' r_body                 { if ($3.tipo) {
                                                                                 sprintf (temp, "\t(loop while %s do \n%s\t) \n%s", $3.code, $6.code, $8.code) ;
@@ -146,22 +150,53 @@ body:           sentencia ';' r_body                                        { sp
                                                                                 sprintf (temp, "\t(if ( /= 0 %s) \n\t(progn \n%s)\t(progn \n%s)\t) \n%s", $3.code, $6.code, $10.code, $12.code) ;  
                                                                               }
                                                                                 $$.code = gen_code (temp) ; }
-            |   FOR '(' declaracion ';' expresion ';' incremento ')' 
-                        '{' body '}' r_body  
-                                                                            { sprintf (temp, "\t%s\n\t(loop while %s do \n%s\t%s)\n%s", $3.code, $5.code, $10.code, $7.code, $12.code) ;
+            |   FOR '(' declaracion ';' expresion ';' incremento ')' lets r_body  
+                                                                            { sprintf (temp, "\t%s\n\t(loop while %s do \n(let\n\t%s\n)\n\t%s)\n%s", $3.code, $5.code, $9.code, $7.code, $10.code) ;
                                                                                 $$.code = gen_code (temp) ; }
             |   RETURN expresion r_expresion ';' r_body                                 { sprintf (temp, "\t(return-from %s (values %s %s))\n%s",funcion, $2.code, $3.code, $5.code) ;
                                                                                 $$.code = gen_code (temp) ; }
             |   expresion ';' r_body                                        { sprintf (temp, "\t%s \n%s", $1.code, $3.code) ;
                                                                                $$.code = gen_code (temp) ; }
+            |   lets  r_body                                                { sprintf (temp, "\t(let\n%s\t)\n%s", $1.code, $2.code) ;
+                                                                               $$.code = gen_code (temp) ; }
+            ;
+
+lets:       '{' declaracion_let  body '}'                                   { sprintf (temp, "\t(%s)\n\t%s", $2.code, $3.code) ;
+                                                                                $$.code = gen_code (temp) ; } 
+            ;
+
+declaracion_let:  
+                /* Lambda */                                                { $$.code = ""; }
+            |   INTEGER IDENTIF '=' expresion r_declaracion_lets ';' declaracion_let        
+                                                                            { sprintf (temp, "(%s %s) %s %s", $2.code, $4.code, $5.code, $7.code) ; 
+                                                                                $$.code = gen_code (temp) ; }
+            |   INTEGER IDENTIF r_declaracion_lets  ';'  declaracion_let    { sprintf (temp, "(%s 0) %s %s", $2.code, $3.code, $5.code) ; 
+                                                                                $$.code = gen_code (temp) ; }
+            |   INTEGER IDENTIF '[' expresion ']'  r_declaracion_lets   ';' declaracion_let
+                                                                            { if ($4.tipo) {
+                                                                                sprintf (temp, "(%s (make-array (if %s 1 0))) %s %s", $2.code, $4.code, $6.code, $8.code) ;   
+                                                                              } else {
+                                                                                sprintf (temp, "(%s (make-array %s)) %s %s", $2.code, $4.code, $6.code, $8.code) ;   
+                                                                              }  
+                                                                                $$.code = gen_code (temp) ; }
+            ;
+
+r_declaracion_lets:  /* Lambda */                                           { $$.code = ""; }
+            |   ',' r_declaracion_lets                                      { sprintf (temp, " %s", $2.code) ;  
+                                                                                $$.code = gen_code (temp) ;}
+            |   IDENTIF '=' expresion r_declaracion_lets                    { sprintf (temp, "(%s %s)%s", $1.code, $3.code, $4.code) ; 
+                                                                                $$.code = gen_code (temp) ; }
+            |   IDENTIF r_declaracion_lets                                  { sprintf (temp, "(%s 0)%s", $1.code, $2.code) ;
+                                                                                $$.code = gen_code (temp) ; }  
+            |   IDENTIF '[' expresion ']'  r_declaracion_lets               { sprintf (temp, "(%s (make-array %s))%s", $1.code, $3.code, $5.code) ; 
+                                                                                $$.code = gen_code (temp) ; }                                                     
             ;
 
 r_body:         /* Lambda */                                                { $$.code = ""; }
             |   body                                                        { $$ = $1 ; }
             ;
 
-sentencia:      declaracion                                                 { $$ = $1 ; }
-            |   PRINTF '(' STRING ',' expresion r_sentencia ')'             { sprintf (temp, "(print %s) %s", $5.code, $6.code) ;  
+sentencia:      PRINTF '(' STRING ',' expresion r_sentencia ')'             { sprintf (temp, "(print %s) %s", $5.code, $6.code) ;  
                                                                                 $$.code = gen_code (temp) ; }
             |   PUTS '(' STRING ')'                                         { sprintf (temp, "(print \"%s\")", $3.code) ;  
                                                                                 $$.code = gen_code (temp) ; }
@@ -173,17 +208,7 @@ r_sentencia:    /* Lambda */                                                { $$
                                                                                 $$.code = gen_code (temp) ;}
             ;
 
-declaracion:    INTEGER IDENTIF '=' expresion r_declaracion                 { sprintf (temp, "(setq %s %s) %s", $2.code, $4.code, $5.code) ; 
-                                                                                $$.code = gen_code (temp) ; }
-            |   INTEGER IDENTIF r_declaracion                               { sprintf (temp, "(setq %s 0) %s", $2.code, $3.code) ; 
-                                                                                $$.code = gen_code (temp) ; }
-            |   IDENTIF '=' expresion                                       { sprintf (temp, "(setq %s %s)", $1.code, $3.code) ; 
-                                                                                $$.code = gen_code (temp) ; }
-            |   INTEGER IDENTIF '[' expresion ']'  r_declaracion            { if ($4.tipo) {
-                                                                                sprintf (temp, "(setq %s (make-array (if %s 1 0))) %s", $2.code, $4.code, $6.code) ;   
-                                                                              } else {
-                                                                                sprintf (temp, "(setq %s (make-array %s)) %s", $2.code, $4.code, $6.code) ;   
-                                                                              }  
+declaracion:    IDENTIF '=' expresion                                       { sprintf (temp, "(setq %s %s)", $1.code, $3.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
             |   IDENTIF '[' expresion ']' '=' expresion r_declaracion       { if ($3.tipo) {
                                                                                 sprintf (temp, "(setf (aref %s (if %s 1 0)) %s) %s", $1.code, $3.code, $6.code, $7.code) ;   
@@ -201,7 +226,7 @@ r_identif:      IDENTIF                                                     { sp
                                                                                 $$.code = gen_code (temp) ; }
 
 declaracion_global:    
-                INTEGER IDENTIF '=' NUMBER r_declaracion                    { sprintf (temp, "(setq %s %d) %s", $2.code, $4.value, $5.code) ; 
+                INTEGER IDENTIF '=' expresion r_declaracion                 { sprintf (temp, "(setq %s %s) %s", $2.code, $4.code, $5.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
             |   INTEGER IDENTIF r_declaracion                               { sprintf (temp, "(setq %s 0) %s", $2.code, $3.code) ; 
                                                                                 $$.code = gen_code (temp) ; }
@@ -221,7 +246,13 @@ r_declaracion:  /* Lambda */                                                { $$
             |   IDENTIF r_declaracion                                       { sprintf (temp, "(setq %s 0) %s", $1.code, $2.code) ;
                                                                                 $$.code = gen_code (temp) ; }  
             |   IDENTIF '[' expresion ']'  r_declaracion                    { sprintf (temp, "(setq %s (make-array %s)) %s", $1.code, $3.code, $5.code) ; 
-                                                                                $$.code = gen_code (temp) ; }                                                     
+                                                                                $$.code = gen_code (temp) ; }
+            |   IDENTIF '[' expresion ']' '=' expresion r_declaracion       { if ($3.tipo) {
+                                                                                sprintf (temp, "(setf (aref %s (if %s 1 0)) %s) %s", $1.code, $3.code, $6.code, $7.code) ;   
+                                                                              } else {
+                                                                                sprintf (temp, "(setf (aref %s %s) %s) %s", $1.code, $3.code, $6.code, $7.code) ;   
+                                                                              }
+                                                                                $$.code = gen_code (temp) ; }
             ;
 
 expresion:      termino                                                     { $$ = $1 ; }

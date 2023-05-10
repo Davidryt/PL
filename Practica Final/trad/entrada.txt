@@ -17,10 +17,12 @@ funcion2(int a, int b, int x){
     return 1+1;
     printf("%d", funcion2(a , b+x, 3*2));
     return 1+1;
+    {int a;
     printf("%d", funcion2(a , b+x, 3*2));
     return 1+1;
     printf("%d", funcion2(a , b+x, 3*2));
     return 1+1;
+    }
     printf("%d", funcion2(a , b+x, 3*2));
 }
 main(){
@@ -71,10 +73,11 @@ main(){
     a=a%(a<b);
     a=a/(a<b);
     a,b = x,y;
-    a,b = patata(0),1+1;
+    a,b = patata(0),1+1; 
     a,b = funcion0(1+1), lista[a<B];
     a[a>b] = 1;
     int a [a<b];
+    a,b = swap(a,b);
 
 }
 //@(main)

@@ -2,7 +2,7 @@
 #!/bin/bash
 cd "$(dirname "$0")/pruebas"
 
-for dir in iniciales avanzadas; do
+for dir in iniciales avanzadas adicionales; do
 for file in "$dir"/*.c; do
     echo "Compiling C $file"
     output_file="${file%.c}_c.txt"
@@ -17,12 +17,16 @@ for file in "$dir"/*.lsp; do
     clisp "$file" > "$output_file"
 done
 
-for file in "$dir"/*.txt; do
-    expected_file="${file%.txt}.out"
-    if cmp -s "$file" "$expected_file"; then
-        echo "File ${file%.txt} matches."
+for file in "$dir"/*_c.txt; do
+    c_file="${file%_c.txt}_c.txt"
+    l_file="${file%_c.txt}_lisp.txt"
+    tr -d '"' < "$c_file" | tr -d '\n' > c_file.tmp
+    tr -d '"' < "$l_file" | tr -d '\n' > l_file.tmp
+    if diff -wB c_file.tmp l_file.tmp >/dev/null; then
+      echo "\e[32mFile ${file%.txt} matches.\e[0m"
     else
-        echo "File ${file%.txt} does not match."
+      echo "\e[31mFile ${file%.txt} does not match.\e[0m"
     fi
+    rm -f c_file.tmp l_file.tmp
 done
 done

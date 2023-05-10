@@ -6,8 +6,8 @@ make:
 	echo "\n"
 	cat salida.txt
 	sh borrar_pruebas.sh
-	sh ejecutar_pruebas.sh
-	sh comparar.sh 
+#	sh ejecutar_pruebas.sh
+#	sh comparar.sh 
 
 
 clean:

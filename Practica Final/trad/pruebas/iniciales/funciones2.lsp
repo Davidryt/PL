@@ -1,0 +1,15 @@
+(defun cuadrado (n ) 
+	(let
+	()
+		(print n) (print (* n n))  
+	(print "") 
+	)
+)
+(defun main ()
+	(let
+	()
+		(cuadrado 4 ) 
+	(cuadrado 10 ) 
+	)
+) 
+ (main)
