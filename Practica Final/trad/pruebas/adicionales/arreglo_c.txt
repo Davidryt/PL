@@ -1,2 +1,0 @@
-Arreglo ordenado: 
-12 22 25 64 

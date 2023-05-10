@@ -1,2 +1,0 @@
-
-"El texto se imprime " 
